@@ -40,7 +40,7 @@ autodoc/
 Start the watch mode from the command line:
 
 ```bash
-java -jar autodoc-v1.6.jar --watch
+java -jar autodoc-v1.7.jar --watch
 ```
 
 The application will:

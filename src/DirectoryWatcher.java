@@ -24,6 +24,10 @@ public class DirectoryWatcher extends Thread {
     // Delay before processing (to ensure file is fully written)
     private static final long PROCESSING_DELAY_MS = 2000;
     
+    // ProcessThread configuration constants
+    private static final boolean TERMINAL_MODE = true;
+    private static final boolean AUTO_OPEN = false;
+    
     private static class FileInfo {
         String path;
         long lastModified;
@@ -154,8 +158,8 @@ public class DirectoryWatcher extends Thread {
                 textFilePath, 
                 templateFilePath, 
                 outputPath,
-                true,  // terminal mode
-                false  // don't auto-open
+                TERMINAL_MODE,
+                AUTO_OPEN
             );
             pt.run();
             
@@ -228,11 +232,9 @@ public class DirectoryWatcher extends Thread {
                     if (file.isFile()) {
                         System.out.println("Detected file: " + filename + " (" + kind.name() + ")");
                         
-                        // Wait a bit to ensure file is fully written
-                        Thread.sleep(PROCESSING_DELAY_MS);
-                        
+                        // Categorize immediately, but processing will be delayed
+                        // until file is stable (checked in tryMatchAndProcess)
                         categorizeFile(file);
-                        tryMatchAndProcess();
                     }
                 }
                 
