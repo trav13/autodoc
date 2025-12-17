@@ -16,13 +16,19 @@ mhdocuments/input/processed/
 
 # Input files (these are user-dropped files)
 profile/input/*.txt
+!profile/input/README.txt
 profile/input/*.docx
 profile/input/*.pptx
 profile/input/*.xlsx
 mhdocuments/input/*.txt
+!mhdocuments/input/README.txt
 mhdocuments/input/*.docx
 mhdocuments/input/*.pptx
 mhdocuments/input/*.xlsx
+
+# Output README files (keep these)
+!profile/output/README.txt
+!mhdocuments/output/README.txt
 
 # IDE and editor files
 *.swp
