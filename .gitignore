@@ -1,0 +1,37 @@
+# Compiled Java classes
+*.class
+gov/
+
+# JAR files (except the release jar)
+*.jar
+!autodoc-*.jar
+
+# Generated output directories
+profile/output/
+mhdocuments/output/
+
+# Processed files archives
+profile/input/processed/
+mhdocuments/input/processed/
+
+# Input files (these are user-dropped files)
+profile/input/*.txt
+profile/input/*.docx
+profile/input/*.pptx
+profile/input/*.xlsx
+mhdocuments/input/*.txt
+mhdocuments/input/*.docx
+mhdocuments/input/*.pptx
+mhdocuments/input/*.xlsx
+
+# IDE and editor files
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build artifacts
+bin/*.class
+
+# Test generated files
+*.tmp

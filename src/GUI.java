@@ -31,9 +31,13 @@ class GUI
   JButton templateBrowse;
   JButton textBrowse;
   JButton help;
+  JButton watchBtn;
   JProgressBar progressBar;
   //CHECKBOXES
   JCheckBox openCheck;
+  //WATCHER
+  WatcherManager watcherManager;
+  boolean watcherActive = false;
   //LABELS
   JLabel status;
   //LAYOUT
@@ -130,9 +134,19 @@ class GUI
     gbc.gridy = 4;
     frm.add(openCheck,gbc);
 
+    // WATCH DIRECTORIES BUTTON
+    watchBtn = new JButton("Start Watch Mode");
+    watchBtn.setPreferredSize(new Dimension(150,25));
+    gbc.anchor = GridBagConstraints.CENTER;
+    gbc.gridx = 0;
+    gbc.gridy = 5;
+    gbc.gridwidth = 2;
+    frm.add(watchBtn,gbc);
+
     initDragDrop();
     gbc.gridx = 0;
     gbc.gridy = 1;
+    frm.setSize(640, 270); // Increase size to accommodate new button
     frm.setVisible(true);
 
     // ActionListener for Text File Field
@@ -275,6 +289,50 @@ class GUI
 
         hf.add(tab);
         hf.setVisible(true);
+      }
+    });
+
+    // WATCH MODE ACTION LISTENER
+    watchBtn.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent thing)
+      {
+        if (!watcherActive)
+        {
+          // Start watch mode
+          watcherManager = WatcherManager.getInstance();
+          watcherManager.startWatching();
+          watcherActive = true;
+          watchBtn.setText("Stop Watch Mode");
+          status.setText("Directory watching active");
+          status.setForeground(new Color(7,85,10));
+          
+          // Show info dialog
+          JOptionPane.showMessageDialog(frm,
+            "Directory watching is now active!\n\n" +
+            "Drop matching text files (.txt) and template files\n" +
+            "(.docx, .pptx, .xlsx) into:\n" +
+            "  - profile/input/\n" +
+            "  - mhdocuments/input/\n\n" +
+            "Generated documents will appear in:\n" +
+            "  - profile/output/\n" +
+            "  - mhdocuments/output/\n\n" +
+            "Files must have matching names (e.g., report.txt and report.docx)",
+            "Watch Mode Active",
+            JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+          // Stop watch mode
+          if (watcherManager != null)
+          {
+            watcherManager.stopWatching();
+          }
+          watcherActive = false;
+          watchBtn.setText("Start Watch Mode");
+          status.setText("Directory watching stopped");
+          status.setForeground(Color.BLACK);
+        }
       }
     });
   }
