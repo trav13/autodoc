@@ -697,7 +697,7 @@ public class Functions {
       // Assign directly to class variable instead of returning ArrayList.
       ArrayList<SlidePart> slides = new ArrayList<SlidePart>();
       org.docx4j.openpackaging.parts.Parts parts = pptMLPackage.getParts();
-      HashMap<PartName, org.docx4j.openpackaging.parts.Part> hashmaps = parts.getParts();
+      HashMap<org.docx4j.openpackaging.parts.PartName, org.docx4j.openpackaging.parts.Part> hashmaps = parts.getParts();
 
       for (org.docx4j.openpackaging.parts.PartName o : hashmaps.keySet()) {
          if (o.getName().startsWith("/ppt/slides/")) {

@@ -17,6 +17,25 @@ public class Main{
   	// INITIALIZE DOCx4j
 		javax.xml.bind.JAXBContext c = org.docx4j.jaxb.Context.jc;
 	
+		// CHECK FOR WATCH MODE
+		if (args.length == 1 && args[0].equals("--watch"))
+		{
+			// WATCH MODE - Monitor directories for file drops
+			System.out.println("\nWelcome to Autodoc Watch Mode...");
+			final WatcherManager manager = WatcherManager.getInstance();
+			
+			// Add shutdown hook to gracefully stop watchers
+			Runtime.getRuntime().addShutdownHook(new Thread() {
+				public void run() {
+					manager.stopWatching();
+				}
+			});
+			
+			manager.startWatching();
+			manager.waitForWatchers();
+			return;
+		}
+
 		SwingUtilities.invokeLater(new Runnable()
 		{
 			public void run()
